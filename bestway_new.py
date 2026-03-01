@@ -74,9 +74,19 @@ class inventory_management(gym.Env):
         self.pipeline = None
         self.demand_hist = None
         self.week = None
-    def reset(self):
-        #reset the replay buffer
-        pass
+    def reset(self, *, seed=None, options=None):
+        super().reset(seed=seed)
+        # pick SKU for the episode (good for multi-task training)
+        if options and "sku_id" in options:
+            self.sku_id = options["sku_id"]
+        self.sku = self.sku_table[self.sku_id]
+
+        self.on_hand = float(self.sku["initial_stock"])
+        self.pipeline = [0.0] * int(self.sku["lead_time"])
+        self.demand_hist = [0.0] * self.demand_window
+        self.week = 0
+
+        return self._get_obs(), {}
     def _get_obs(self):
         #dynamic features
         pass
