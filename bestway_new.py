@@ -74,3 +74,15 @@ class inventory_management(gym.Env):
         self.pipeline = None
         self.demand_hist = None
         self.week = None
+    def reset(self):
+        #reset the replay buffer
+        pass
+    def _get_obs(self):
+        #dynamic features
+        pass
+    def _get_demand(self):
+        #link to LSTM
+        pass
+    def step(self, action):
+        #all the env code and reward (all the maths part in the report)
+        pass
